@@ -1,2 +1,74 @@
-<h1>Hello World</h1>
-this is my first rails webpage
+<div class="jumbotron text-center bg-light py-5">
+  <div class="container">
+    <h1 class="display-4 text-primary">Gerencie seus contatos como nunca antes!</h1>
+    <p class="lead">
+      Bem-vindo ao **Lista Fácil**, a solução ideal para manter todas as suas conexões organizadas e ao seu alcance.
+      Adicione, pesquise e visualize informações de contatos com rapidez e praticidade em um ambiente seguro e fácil de usar.
+    </p>
+    <div class="mt-4">
+      <a href="<%= new_friend_path %>" class="btn btn-primary btn-lg">Adicionar Novo Contato</a>
+      <% if user_signed_in? %><%= link_to "Ver Contatos", friends_path, class:"btn btn-outline-dark btn-lg"%><%end%>
+    </div>
+  </div>
+</div>
+<div class="container py-5">
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="mb-3">
+        <i class="fas fa-user-plus fa-3x text-primary"></i>
+      </div>
+      <h3>Adicione Contatos em Segundos</h3>
+      <p>
+        Preencha os detalhes essenciais e salve rapidamente seus contatos. Chega de planilhas ou papéis desorganizados!
+      </p>
+    </div>
+    <div class="col-md-4">
+      <div class="mb-3">
+        <i class="fas fa-search fa-3x text-success"></i>
+      </div>
+      <h3>Pesquise e Encontre com Facilidade</h3>
+      <p>
+        Nunca perca tempo procurando! Utilize nossa busca avançada para localizar qualquer contato pelo nome, e-mail ou telefone.
+      </p>
+    </div>
+    <div class="col-md-4">
+      <div class="mb-3">
+        <i class="fas fa-lock fa-3x text-danger"></i>
+      </div>
+      <h3>Privacidade e Segurança Garantidas</h3>
+      <p>
+        Seus dados estão protegidos com as mais avançadas tecnologias de criptografia. Privacidade é a nossa prioridade!
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="container py-5">
+  <h2 class="text-center mb-4">Seus contatos mais recentes, sempre à vista!</h2>
+  <p class="text-center text-muted">
+    Visualize rapidamente os últimos contatos adicionados e mantenha o controle de suas conexões.
+    Clique em qualquer linha para acessar os detalhes completos.
+  </p>
+  <% if user_signed_in? %>
+  <div>
+    <table class="table-responsive table table-striped table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col">Email</th>
+          <th scope="col">Telefone</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @recent_contacts.each do |friend| %>
+        <tr onclick="location.href='<%= friend_path(friend) %>'" style="cursor: pointer;">
+          <td><%= friend.first_name.capitalize %></td>
+          <td><%= friend.email %></td>
+          <td><%= friend.phone %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <% end %>
+</div>
