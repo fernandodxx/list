@@ -4,7 +4,7 @@ class FriendsController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :destroy]
   # GET /friends or /friends.json
   def index
-    @friends = Friend.all
+    @friends = current_user.friends.order(:first_name)
   end
 
   # GET /friends/1 or /friends/1.json
