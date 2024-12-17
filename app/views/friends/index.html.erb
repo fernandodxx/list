@@ -1,42 +1,52 @@
 <% if user_signed_in? %>
+<div class="container my-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="text-primary">Meus Amigos</h1>
+    <%= link_to "Adicionar Novo Amigo", new_friend_path, class: "btn btn-primary" %>
+  </div>
 
-<h1>Friends</h1>
-
-<table class="table table-striped table-bordered table-hover">
-  <thead class="table-dark">
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Twitter</th>
-      <th> </th>
-    </tr>
-  </thead>
-
-  <tbody>
+  <% if @friends.any? { |friend| friend.user == current_user } %>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     <% @friends.each do |friend| %>
-    <% if friend.user == current_user%>
-    <tr>
-      <td><%= link_to friend.first_name + ' ' + friend.last_name, friend %>
-      </td>
-      <td><%= friend.email %>
-      </td>
-      <td><%= friend.phone %>
-      </td>
-      <td><%= friend.twitter %>
-      </td>
-      <td><%= link_to "Destroy", friend, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class:"btn btn-outline-danger " %></td>
-    </tr>
+    <% if friend.user == current_user %>
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">
+            <%= link_to "#{friend.first_name.capitalize} #{friend.last_name.capitalize}", friend, class: "text-decoration-none text-dark" %>
+          </h5>
+          <p class="card-text">
+            <strong>Email:</strong> <%= friend.email %><br>
+            <strong>Telefone:</strong> <%= friend.phone %><br>
+            <strong>Twitter:</strong>
+            <% if friend.twitter.present? %>
+            <a href="https://twitter.com/<%= friend.twitter %>" target="_blank" class="text-info">@<%= friend.twitter %></a>
+            <% else %>
+            <span class="text-muted">Não informado</span>
+            <% end %>
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 d-flex justify-content-between">
+          <%= link_to "Ver Detalhes", friend, class: "btn btn-outline-primary btn-sm" %>
+          <%= link_to "Excluir", friend, 
+                              data: { turbo_method: :delete, turbo_confirm: "Tem certeza de que deseja excluir este amigo?" }, 
+                              class: "btn btn-outline-danger btn-sm" %>
+        </div>
+      </div>
+    </div>
     <% end %>
     <% end %>
-  </tbody>
-</table>
-<br>
-
-<%= link_to "New friend", new_friend_path, class:"btn btn-primary" %>
-
+  </div>
+  <% else %>
+  <div class="alert alert-warning text-center" role="alert">
+    Você ainda não adicionou nenhum amigo. Clique no botão acima para começar!
+  </div>
+  <% end %>
+</div>
 <% else %>
-<h1>Hello World</h1>
-this is my first rails webpage
-
+<div class="container text-center my-5">
+  <h1 class="text-danger">Acesso Negado</h1>
+  <p>Você precisa estar logado para visualizar esta página.</p>
+  <%= link_to "Entrar", new_user_session_path, class: "btn btn-primary mt-3" %>
+</div>
 <% end %>
