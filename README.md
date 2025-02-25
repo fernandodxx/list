@@ -47,3 +47,9 @@ O **List** é uma aplicação web simples e prática, desenvolvida com **Ruby on
    
 6. Acesse a aplicação em seu navegador:
 http://localhost:3000
+
+
+![list](https://github.com/user-attachments/assets/0751b42e-15d8-478f-8944-55c561e32369)
+
+
+
